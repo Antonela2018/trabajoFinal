@@ -14,8 +14,8 @@
             !--<button type="submit" name="register">Registrarse</button>
          </div>
     </form>
-<?php
-echo "<form class='login' action='".FRONT_ROOT."Home/Index' method='POST'>
+
+"<form class='login' action='".FRONT_ROOT."Home/Index' method='POST'>
         <button type='submit' name='action'>Volver</button>
     </form>";
-?>
+

@@ -10,9 +10,11 @@ if($_SESSION['logged']==false){
     </form>
     <form class='login' action='".FRONT_ROOT."Login/receiveAction' method='POST'> 
     <button type='submit' name='action' value='Registrar'>Registrar</button>
-</form>";
+    </form>";
 }else{
-    echo 'Estas logeado con la cuenta de: '.$_SESSION['name'];
+
+    echo "Estas logeado con la cuenta de:";
+    var_dump($_SESSION['name']); 
     echo "<form class='login' action='".FRONT_ROOT."Home/Index' method='POST'>
         <button type='submit' name='action'>Desconectar</button>
     </form>";

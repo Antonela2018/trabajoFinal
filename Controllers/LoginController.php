@@ -15,11 +15,16 @@ class LoginController{
     }
 
     public function receiveAction(){
-        if($_POST["action"]=="Ingresar"){
+
+        var_dump($_POST);
+        echo("HOLA");
+       /* if($_POST["action"]=="Ingresar"){
             $this->log();
         }elseif($_POST["action"]=="Registrar"){
+
             $this->register();
         }
+        */
     }
 
     public function log(){
