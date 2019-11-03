@@ -4,7 +4,7 @@
     use \PDO as PDO;
     use \Exception as Exception;
     use DAO\QueryType as QueryType;
-    use Models\Cinema;
+    use Models\Cinema as Cinema;
 
     class cinemaDBDAO
     {
@@ -44,6 +44,7 @@
             $cinema->setTicketValue($v['ticket_value']);
             $cinema->setAddress($v['address']);
             $cinema->setCapacity($v['capacity']);
+            $cinema->setId($v['cinema_id']);
             array_push($cinemaList,$cinema);
         }
         echo count($cinemaList);
@@ -138,6 +139,34 @@
             $cinema->setTicketValue($result[0]->getTicketValue());
             $cinema->setAddress($result[0]->getAddress());
             $cinema->setCapacity($result[0]->getCapacity());
+            $cinema->setId($result[0]->getId());
+            return $cinema;
+            
+        }else
+            return false;
+    }
+    public function readById ($cinema_id)
+    {
+        $sql = "SELECT * FROM cinemas where cinema_id = :cinema_id";
+        $parameters['cinema_id'] = $cinema_id;
+        try
+        {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql, $parameters);
+        }
+        catch(PDOException $e)
+        {
+            echo $e;
+        }
+        if(!empty($resultSet))
+        {
+            $result = $this->mapear($resultSet);
+            $cinema = new Cinema();
+            $cinema->setName($result[0]->getName());
+            $cinema->setTicketValue($result[0]->getTicketValue());
+            $cinema->setAddress($result[0]->getAddress());
+            $cinema->setCapacity($result[0]->getCapacity());
+            $cinema->setId($result[0]->getId());
             return $cinema;
             
         }else
@@ -145,7 +174,7 @@
     }
 
 /*
-    public funtion readby($id)
+    public function readby($id)
     {
         sql= "SELECT * FROM cinemas where id_cinema =:id_cinema";
         $parameters['id_cinema'] = $id;
