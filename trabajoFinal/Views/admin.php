@@ -16,9 +16,6 @@
 <form action="<?php echo FRONT_ROOT."MovieFunction/showAddView";?>">
 	<button type="submit">AGREGAR FUNCIONES</button>
 </form>
-<form action="<?php echo FRONT_ROOT."MovieFunction/showMovieFunctionListDB";?>">
-	<button type="submit">MOSTRAR FUNCIONES</button>
-</form>
 <form action="<?php echo FRONT_ROOT."MovieFunction/showMovieFunctionOrderByTimeDB";?>">
 	<button type="submit">MOSTRAR FUNCIONES POR FECHA</button>
 </form>

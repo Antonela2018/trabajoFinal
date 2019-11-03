@@ -102,11 +102,7 @@
         foreach($value as $v)
         {
             $movieFunction = new MovieFunction();
-<<<<<<< HEAD
-            $movieFunction->setMovieFunctionId($v["movieFunction_id"]);
-=======
             $movieFunction-> setMovieFunctionId($v['movieFunction_id']);
->>>>>>> local
             $movieFunction->setCinemaId($v['cinema_id']);
             $movieFunction->setMovieId($v['movie_id']);
             $movieFunction->setStartDateTime($v['start_datetime']);
@@ -189,32 +185,6 @@
     public function readAvailableMovies ($startDateTime)
     {   
 
-<<<<<<< HEAD
-    public function validateMovieFunctionDate($cinema_id,$startDateTime)
-    {
-        $sql = "SELECT * FROM movieFunctions WHERE cinema_id = :cinema_id AND start_datetime LIKE '".$startDateTime."%' ";
-        //$parameters['startDateTime'] = $startDateTime;
-        $parameters['cinema_id'] = $cinema_id;
-        try
-        {
-            $this->connection = Connection::getInstance();
-            $resultSet = $this->connection->execute($sql,$parameters);
-        }
-        catch(PDOException $e)
-        {
-            echo $e;
-        }
-        if (!empty($resultSet))
-           return $this->mapear($resultSet);
-        else 
-           return false;
-    }  
-    public function validateMovieFunctionDateByMovie($movie_id,$startDateTime)
-    {
-        $sql = "SELECT * FROM movieFunctions WHERE movie_id = :movie_id AND start_datetime LIKE '".$startDateTime."%' ";
-        //$parameters['startDateTime'] = $startDateTime;
-        $parameters['movie_id'] = $movie_id;
-=======
         $sql = "SELECT * FROM movieFunctions WHERE ('@startDateTime' NOT BETWEEN fromdate AND todate
         AND '@endDateTime'  NOT BETWEEN fromdate AND todate)";
        // $parameters['movieFunction_id'] = $movieFunction->getMovieFunctionId();
@@ -249,7 +219,6 @@
 
         $sql = "SELECT * FROM movieFunctions WHERE cinema_id = :cinema_id";
         $parameters['cinema_id']= $cinema_id;
->>>>>>> local
         try
         {
             $this->connection = Connection::getInstance();
@@ -264,11 +233,8 @@
         else 
            return false;
     }  
-<<<<<<< HEAD
-=======
 
 
     
->>>>>>> local
 }     
 ?>

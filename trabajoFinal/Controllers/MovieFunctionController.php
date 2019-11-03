@@ -80,109 +80,16 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             }
             include_once(VIEWS_PATH."movieList.php");
         }
-        // agregado ahora
-        public function availableMovies($startDateTime){
-
-            $this->movieFunctionDBDAO->readAvailableMovies($startDateTime);
-
-        }
-        // agregado ahora
-      public function readOrderByCinemId($cinema_id){
         
-<<<<<<< HEAD
-        public function validateFunctionByDate($cinemaId,$movieId,$date){
-            $response = $this->movieFunctionDBDAO->validateMovieFunctionDateByMovie($movieId,$date);
-            $cineId=$cinemaId;
-            $movId=$movieId;
-            $d=$date;
-            if($response==false){
-                $response = $this->movieFunctionDBDAO->validateMovieFunctionDate($cinemaId,$date);
-                include_once(VIEWS_PATH."movieFunctionAddTime.php");
-            }else{
-                if($cinemaId == $response[0]->getCinemaId()){
-                    //aca entro si la peli ya se esta dando ese dia en el cine
-                    $response = $this->movieFunctionDBDAO->validateMovieFunctionDate($cinemaId,$date);
-                    include_once(VIEWS_PATH."movieFunctionAddTime.php");
-                }else{
-                    echo "La pelicula esta siendo usada por otro cine, kb";
-                }
-            }
-        }                                                                                          
-        
-        public function validateFunctionByTime($cinemaId,$movieId,$date,$time){
-            $response = $this->movieFunctionDBDAO->validateMovieFunctionDate($cinemaId,$date);
-            $combinedDT = date('Y-m-d H:i:s', strtotime("$date $time"));
-            $newFunction = new MovieFunction();
-            $newFunction->setCinemaId($cinemaId);
-            $newFunction->setMovieId($movieId);
-            $newFunction->setStartDateTime($combinedDT);
-
-            $notOverlap = false;
-            if($response != false){
-                foreach($response as $function){
-                    $notOverlap = $this->notOverlapFunctions($function,$newFunction);
-                    if($notOverlap==false){
-                        break;
-                    }
-                }
-                var_dump($notOverlap);
-                if($notOverlap==true){
-                    $this->Add($cinemaId,$movieId,$combinedDT);
-                }else{
-                    echo 'Se superponen las fechas';
-                    $cineId=$cinemaId;
-                    $movId=$movieId;
-                    $d=$date;
-                    include_once(VIEWS_PATH.'movieFunctionAddTime.php');
-                }
-            }
-            else{
-                $this->Add($cinemaId,$movieId,$combinedDT);
-            }
-        }
-
-        public function notOverlapFunctions($functionA, $functionB){ //true si se solapan, false si no
-            //setup
-            $startDateA = new DateTime($functionA->getStartDateTime());
-            $movieA = $this->movieDBDAO->read($functionA->getMovieId());
-            $finishDateA = new DateTime($functionA->getStartDateTime());
-            $finishDateA->modify('+'.$movieA->getRuntime().' minute');
-            $finishDateA->modify('+15 minute');
-
-            $startDateB = new DateTime($functionB->getStartDateTime());
-            $movieB = $this->movieDBDAO->read($functionB->getMovieId());
-            $finishDateB = new DateTime($functionB->getStartDateTime());
-            $finishDateB->modify('+'.$movieB->getRuntime().' minute');
-            $finishDateB->modify('+15 minute');
-
-            //validation
-            if($startDateA==$startDateB){
-                return false;
-            }else{
-                if($startDateA>$startDateB && $startDateA>=$finishDateB){
-                    return true;
-                }else{
-                    if($startDateA<$startDateB && $finishDateA<=$startDateB){
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-                                                                                                                               
- }
-    
-=======
-        $cinema_id = (int)$cinema_id;
-        
+      public function readOrderByCinemaId($cinema_id){   
+        $cinema_id = (int)$cinema_id;        
         $lista = array();
         $cinema = new Cinema();
         $cinema = $this->cinemaDBDAO->readById($cinema_id);
-        var_dump($cinema); echo'<br>';
         $lista=$this->movieFunctionDBDAO->readOrderByCinemaId($cinema_id);
-        if(count($lista)>0){
+        
+        if(($lista!=false)&&(count($lista)>0)){
             foreach($lista as $item){
-                $a=0;
                 $movie = new Movie();
                 $movie= $this->movieDBDAO->read($item->getMovieId());
                 $item->setEndDateTime($movie);
@@ -190,10 +97,11 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             }   
             include_once(VIEWS_PATH."showFunctionList.php");             
         }else{ 
+            include_once(VIEWS_PATH."cinemalist.php");
             return false;
+            
         }
       }       
     }
 
->>>>>>> local
 ?> 
