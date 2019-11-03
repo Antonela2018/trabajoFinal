@@ -1,6 +1,8 @@
 <?php
     namespace Controllers;
-    use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
+
+use ArrayObject;
+use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
     use DAO\MovieDBDAO as MovieDBDAO;
     use DAO\CinemaDBDAO as CinemaDBDAO;
     use DAO\GenreDBDAO as GenreDBDAO;
@@ -78,7 +80,16 @@
             }
             include_once(VIEWS_PATH."movieList.php");
         }
+        // agregado ahora
+        public function availableMovies($startDateTime){
+
+            $this->movieFunctionDBDAO->readAvailableMovies($startDateTime);
+
+        }
+        // agregado ahora
+      public function readOrderByCinemId($cinema_id){
         
+<<<<<<< HEAD
         public function validateFunctionByDate($cinemaId,$movieId,$date){
             $response = $this->movieFunctionDBDAO->validateMovieFunctionDateByMovie($movieId,$date);
             $cineId=$cinemaId;
@@ -161,4 +172,28 @@
                                                                                                                                
  }
     
+=======
+        $cinema_id = (int)$cinema_id;
+        
+        $lista = array();
+        $cinema = new Cinema();
+        $cinema = $this->cinemaDBDAO->readById($cinema_id);
+        var_dump($cinema); echo'<br>';
+        $lista=$this->movieFunctionDBDAO->readOrderByCinemaId($cinema_id);
+        if(count($lista)>0){
+            foreach($lista as $item){
+                $a=0;
+                $movie = new Movie();
+                $movie= $this->movieDBDAO->read($item->getMovieId());
+                $item->setEndDateTime($movie);
+                $item->getEndDateTime($movie);
+            }   
+            include_once(VIEWS_PATH."showFunctionList.php");             
+        }else{ 
+            return false;
+        }
+      }       
+    }
+
+>>>>>>> local
 ?> 

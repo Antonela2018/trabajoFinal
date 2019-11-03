@@ -145,6 +145,33 @@
         }else
             return false;
     }
+    public function readById ($cinema_id)
+    {
+        $sql = "SELECT * FROM cinemas where cinema_id = :cinema_id";
+        $parameters['cinema_id'] = $cinema_id;
+        try
+        {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql, $parameters);
+        }
+        catch(PDOException $e)
+        {
+            echo $e;
+        }
+        if(!empty($resultSet))
+        {
+            $result = $this->mapear($resultSet);
+            $cinema = new Cinema();
+            $cinema->setName($result[0]->getName());
+            $cinema->setTicketValue($result[0]->getTicketValue());
+            $cinema->setAddress($result[0]->getAddress());
+            $cinema->setCapacity($result[0]->getCapacity());
+            $cinema->setId($result[0]->getId());
+            return $cinema;
+            
+        }else
+            return false;
+    }
 
 /*
     public function readby($id)
