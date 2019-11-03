@@ -6,6 +6,7 @@
         private $capacity;      
         private $ticketValue;
         private $id;
+        
 /*
         public function __construct(){
 
@@ -56,6 +57,6 @@
         public function getId(){
             return $this->id;
         }
-
+        
 
     }

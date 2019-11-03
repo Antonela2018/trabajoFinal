@@ -102,9 +102,11 @@
         foreach($value as $v)
         {
             $movieFunction = new MovieFunction();
+            $movieFunction-> setMovieFunctionId($v['movieFunction_id']);
             $movieFunction->setCinemaId($v['cinema_id']);
             $movieFunction->setMovieId($v['movie_id']);
             $movieFunction->setStartDateTime($v['start_datetime']);
+            //setEndDateTime
             array_push($movieFunctionList,$movieFunction);
         }
         if(count($movieFunctionList)>0)
@@ -123,6 +125,7 @@
         $parameters['start_datetime'] = $movieFunction->getStartDateTime();
         $parameters['cinema_id'] = $movieFunction->getCinemaId();
         $parameters['movie_id'] = $movieFunction->getMovieId();
+        $movieFunction->setEndDateTime();
 
         try
         {
@@ -170,13 +173,66 @@
             $movieFunction->setCinemaId($result[0]->getCinemaId());
             $movieFunction->setMovieId($result[0]->getMovieId());
             $movieFunction->setStartDateTime($result[0]->getStartTime());
+            $movieFunction->setEndDateTime($result[0]->getEndTime());
             return $movieFunction;
             
         }else
      
         return false;
     }
+ 
+        // estoy cambiando esto ahora
+    public function readAvailableMovies ($startDateTime)
+    {   
 
+        $sql = "SELECT * FROM movieFunctions WHERE ('@startDateTime' NOT BETWEEN fromdate AND todate
+        AND '@endDateTime'  NOT BETWEEN fromdate AND todate)";
+       // $parameters['movieFunction_id'] = $movieFunction->getMovieFunctionId();
+        try
+        {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql, $parameters);
+        }
+        catch(PDOException $e)
+        {   
+            echo $e;
+        }
+        if(!empty($resultSet))
+        {
+            $result = $this->mapear($resultSet);
+             
+            return $result;            
+        }else
+ 
+        return false;
+    }
+    public function readOrderByCinemaId($cinema_id)
+    {
+        echo "entro a moviefuntdb"; echo '<br>';
+        
+        if($cinema_id === 1){
+            echo 'true'; echo'<br>';
+           }            
+           else{
+            echo 'false'; echo'<br>';
+           }
+
+        $sql = "SELECT * FROM movieFunctions WHERE cinema_id = :cinema_id";
+        $parameters['cinema_id']= $cinema_id;
+        try
+        {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql,$parameters);
+        }
+        catch(PDOException $e)
+        {
+            echo $e;
+        }
+        if (!empty($resultSet))
+           return $this->mapear($resultSet);
+        else 
+           return false;
+    }  
 
 
     

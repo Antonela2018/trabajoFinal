@@ -1,16 +1,21 @@
 <?php
-if($lista==false){
+if(($lista==false)&&($movie ==null)&&($cinema=!null)){
 	echo '<script>alert("No hay funciones en la base de datos");</script>';
 }else{
 	foreach($lista as $item){
-		echo '<dl>'.
-				'<dt> Pelicula: '.$item->getMovieId().'<dt>'.
+		if($item->getMovieId()== $movie->getMovieId()){
+			echo '<dl>'.
+		        '<dt> MovieFunction:'.(int)$item->getMovieFunctionId().'<dt>'.
+				'<dt> Pelicula: '.$movie->getTitle().'<dt>'.
+				'<dt> Duracion: '.$movie->getRuntime().'<dt>'.
 				'<dt> Cine: '.$item->getCinemaId().'<dt>'.
-				'<dd> Fecha y hora: '.$item->getStartDatetime().'</dd>'.
-			'</dl>';
+				'<dd> Inicio: '.$item->getStartDatetime().'</dd>'.
+				'<dd> Finalizacion: '.$item->getEndDateTime().'</dd>'.
+				'<dd> Valor entrada: '.$cinema->getTicketValue().'</dd>'.
+			'</dl>';		
+		}	
 	}
 }
-
 echo '<form action="'.FRONT_ROOT.'Login/homeAdmin">
 	<button>Volver</button></form>';
 ?>
