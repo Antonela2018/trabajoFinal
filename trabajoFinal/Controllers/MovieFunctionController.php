@@ -101,8 +101,9 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             return false;
             
         }
-
-        public function RemoveDB($movieFunctionId) //TODO cambiar a $cinema
+    }
+//TODO cambiar a $cinema
+         function RemoveDB($movieFunctionId) 
         {
             $this->movieFunctionDBDAO->Remove($movieFunctionId);
 

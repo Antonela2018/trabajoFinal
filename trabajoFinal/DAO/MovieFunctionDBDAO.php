@@ -208,15 +208,6 @@
     }
     public function readOrderByCinemaId($cinema_id)
     {
-        echo "entro a moviefuntdb"; echo '<br>';
-        
-        if($cinema_id === 1){
-            echo 'true'; echo'<br>';
-           }            
-           else{
-            echo 'false'; echo'<br>';
-           }
-
         $sql = "SELECT * FROM movieFunctions WHERE cinema_id = :cinema_id";
         $parameters['cinema_id']= $cinema_id;
         try
@@ -233,8 +224,6 @@
         else 
            return false;
     }  
-
-
-    
+   
 }     
 ?>
