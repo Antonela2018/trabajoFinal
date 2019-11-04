@@ -14,7 +14,7 @@ if($lista==false){
 				'<form action="'.FRONT_ROOT.'cinema/ShowUpdateCinema">
 				<button name="name" value="'.$item->getName().'">Change</button>.
 				</form>'.
-				'<form action="'.FRONT_ROOT.'movieFunction/readOrderByCinemId">
+				'<form action="'.FRONT_ROOT.'movieFunction/readOrderByCinemaId">
                 <button name="name" value="'.$item->getId().'">FUNCIONES</button>..
   				</form>'.
 			'</dl>';

@@ -1,5 +1,5 @@
 <?php
-if(($lista==false)&&($movie ==null)&&($cinema=!null)){
+if(($lista==false)){
 	echo '<script>alert("No hay funciones en la base de datos");</script>';
 }else{
 	foreach($lista as $item){

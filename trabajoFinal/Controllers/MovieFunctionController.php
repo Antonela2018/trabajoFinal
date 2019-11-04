@@ -86,7 +86,7 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
 
         }
         // agregado ahora
-      public function readOrderByCinemId($cinema_id){
+      public function readOrderByCinemaId($cinema_id){
         
         $cinema_id = (int)$cinema_id;
         
