@@ -9,6 +9,7 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
     use Models\Cinema as Cinema;
     use Models\Movie as Movie;
     use Models\MovieFunction as MovieFunction;
+    use DateTime;
 
     class MovieFunctionController
     {
@@ -31,10 +32,10 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             require_once(VIEWS_PATH.'movieFunctionAdd.php');
         }
 
-        public function Add($cinemaId,$movieId,$date)
+        public function Add($cinemaId,$movieId,$dateTime)
         {
             $movieFunction = new MovieFunction();
-            $movieFunction->setStartDateTime($date);
+            $movieFunction->setStartDateTime($dateTime);
             $movieFunction->setCinemaId($cinemaId);
             $movieFunction->setMovieId($movieId);
 
@@ -79,6 +80,7 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             }
             include_once(VIEWS_PATH."movieList.php");
         }
+<<<<<<< HEAD
         // agregado ahora
         public function availableMovies($startDateTime){
 
@@ -89,15 +91,18 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
       public function readOrderByCinemaId($cinema_id){
         
         $cinema_id = (int)$cinema_id;
+=======
+>>>>>>> sabado-2-11
         
+      public function readOrderByCinemaId($cinema_id){   
+        $cinema_id = (int)$cinema_id;        
         $lista = array();
         $cinema = new Cinema();
         $cinema = $this->cinemaDBDAO->readById($cinema_id);
-        var_dump($cinema); echo'<br>';
         $lista=$this->movieFunctionDBDAO->readOrderByCinemaId($cinema_id);
-        if(count($lista)>0){
+        
+        if(($lista!=false)&&(count($lista)>0)){
             foreach($lista as $item){
-                $a=0;
                 $movie = new Movie();
                 $movie= $this->movieDBDAO->read($item->getMovieId());
                 $item->setEndDateTime($movie);
@@ -105,9 +110,19 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             }   
             include_once(VIEWS_PATH."showFunctionList.php");             
         }else{ 
+            include_once(VIEWS_PATH."cinemalist.php");
             return false;
+            
         }
-      }       
     }
+//TODO cambiar a $cinema
+         function RemoveDB($movieFunctionId) 
+        {
+            $this->movieFunctionDBDAO->Remove($movieFunctionId);
 
+            $this->showMovieFunctionListDB();
+        }
+                                                                                                                               
+ }
+    
 ?> 
