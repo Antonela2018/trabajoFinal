@@ -26,7 +26,8 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             $this->genreDBDAO = new GenreDBDAO();
         }
       
-        public function showAddView(){
+        public function showAddView()
+        {
             $cinemas = $this->cinemaDBDAO->readAll();
             $movies = $this->movieDBDAO->readAll();
             require_once(VIEWS_PATH.'movieFunctionAdd.php');
@@ -44,17 +45,20 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             $this->ShowAddView();
         }
 
-        public function showMovieFunctionListDB(){
+        public function showMovieFunctionListDB()
+        {
             $lista = $this->movieFunctionDBDAO->readAll();
             include_once(VIEWS_PATH."showFunctionList.php");
         }
 
-        public function showMovieFunctionOrderByTimeDB(){
+        public function showMovieFunctionOrderByTimeDB()
+        {
             $lista = $this->movieFunctionDBDAO->readOrderByTime();
             include_once(VIEWS_PATH."showFunctionList.php");
         }
 
-        public function listMovieFunctionListDB(){
+        public function listMovieFunctionListDB()
+        {
             $moviesArray = $this->movieFunctionDBDAO->readAllMovies();
             $lista = array();
             if($moviesArray!=false){
@@ -65,64 +69,56 @@ use DAO\MovieFunctionDBDAO as MovieFunctionDBDAO;
             include_once(VIEWS_PATH."movieList.php");
         }
 
-        public function showMovieFunctionByGenreDB(){
+        public function showMovieFunctionByGenreDB()
+        {
             $genres = $this->genreDBDAO->readAll();
             include_once(VIEWS_PATH."selectGenre.php");
         }
 
-        public function listMovieFunctionListByGenreDB($genreId){
+        public function listMovieFunctionListByGenreDB($genreId)
+        {
             $moviesArray = $this->movieFunctionDBDAO->readAllMoviesByGenres($genreId);
             $lista = array();
-            if($moviesArray!=false){
+            if($moviesArray=!false){
+                echo $moviesArray;
                 foreach($moviesArray as $array=>$v){
-                array_push($lista,$this->movieDBDAO->read($v['movie_id']));
+                    array_push($lista,$this->movieDBDAO->read($v['movie_id']));
                 }
             }
             include_once(VIEWS_PATH."movieList.php");
         }
-<<<<<<< HEAD
-        // agregado ahora
-        public function availableMovies($startDateTime){
-
-            $this->movieFunctionDBDAO->readAvailableMovies($startDateTime);
-
-        }
-        // agregado ahora
-      public function readOrderByCinemaId($cinema_id){
         
-        $cinema_id = (int)$cinema_id;
-=======
->>>>>>> sabado-2-11
+        public function readOrderByCinemaId($cinema_id)
+        {   
+         $cinema_id = (int)$cinema_id;        
+         $lista = array();
+         $cinema = new Cinema();
+         $cinema = $this->cinemaDBDAO->readById($cinema_id);
+         $lista=$this->movieFunctionDBDAO->readOrderByCinemaId($cinema_id);
         
-      public function readOrderByCinemaId($cinema_id){   
-        $cinema_id = (int)$cinema_id;        
-        $lista = array();
-        $cinema = new Cinema();
-        $cinema = $this->cinemaDBDAO->readById($cinema_id);
-        $lista=$this->movieFunctionDBDAO->readOrderByCinemaId($cinema_id);
-        
-        if(($lista!=false)&&(count($lista)>0)){
-            foreach($lista as $item){
+         if(($lista!=false)&&(count($lista)>0))
+         {
+           foreach($lista as $item)
+            {
                 $movie = new Movie();
                 $movie= $this->movieDBDAO->read($item->getMovieId());
                 $item->setEndDateTime($movie);
                 $item->getEndDateTime($movie);
-            }   
+             }   
             include_once(VIEWS_PATH."showFunctionList.php");             
-        }else{ 
+         }else{ 
             include_once(VIEWS_PATH."cinemalist.php");
-            return false;
-            
+            return false;   
+         }
         }
-    }
-//TODO cambiar a $cinema
+
+        //TODO cambiar a $cinema
          function RemoveDB($movieFunctionId) 
         {
             $this->movieFunctionDBDAO->Remove($movieFunctionId);
 
             $this->showMovieFunctionListDB();
-        }
-                                                                                                                               
+        }                                                                                                                          
  }
     
 ?> 
